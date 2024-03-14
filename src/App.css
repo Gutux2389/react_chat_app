@@ -50,6 +50,7 @@ p{
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    position: relative;
 }
 .sent{
   flex-direction: row-reverse;
@@ -64,8 +65,17 @@ p{
   color: black;
   align-self: flex-start;
 }
+.msgArea{
+  position: relative;
+}
+.emojiPicker{
+  position: absolute;
+  
+  right: 50px;
+  bottom: 0px;
+}
 .chatbox {
-  height: 83vh;
+  height: 84vh;
   align-content: center;
   overflow-y: scroll;
   display: flex;
@@ -73,7 +83,6 @@ p{
   overflow-wrap: break-word;
 }
 .GuestMainPage{
-  background-color: #5b5d8d;
   height: 100vh;
 }
 .sentProfile{
@@ -107,6 +116,8 @@ p{
 .myLoginAuth{
   width: 100%;
   border-radius: 20px;
+  background-color: #3f51b5;
+  color: white;
 }
 .mySlideText{
   position: absolute;
@@ -152,33 +163,33 @@ p{
   padding-left: 5px;
 }
 .inputForm{
-  height: 50px;
+  border: 2px solid grey;
+  border-radius: 20px;
+  background-color: white;
+  overflow: hidden;
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #e5e5ea;
-  margin-top: auto;
+  flex-direction: row;
 }
 .inputBox{
   position: absolute;
   bottom: 0;
+  width: 100%;
+  background-color: white;
 }
 .textInput{
-  width: 1220px;
+  width: 95%;
   border: none;
   outline: none;
   color: black;
   font-size: 15px;
   background-color: aliceblue;
+  padding-right: 5px;
 }
 .iconInput{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
+  
   label{
     cursor: pointer;
-    height: 25px;
   }
 }
 .msgContent{
@@ -306,4 +317,55 @@ p{
   display: flex;
   gap: 10px;
 }
+.insideInputIcon{
+  background-color: white;
+  padding-top: 3px;
+  cursor: pointer;
+ 
+}
+.emojiControl{
+  padding-left: 12px;
+  padding-top: 3px;
+  cursor: pointer;
+}
+.inputOverallForm{
+  display: flex;
+  width: 100%;
+  height: 33px; 
+  gap: 5px;
+}
+.searchBar{
+  position: relative;
+}
+.suggestion{
+  position: absolute;
+  z-index: 1;
+  top: 100;
+  background-color: white;
+  width: 100%;
+  border: 2px solid grey;
+}
+.recentMsg{
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+.roomMemberList{
   
+}
+.roomGroup{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 1px;
+  border: 2px solid grey;
+  list-style-type: none;
+  display: flex;
+  border-radius: 5px;
+}
+ul a{
+  text-decoration: none;
+}
+.latestMsg{
+  opacity: 50%;
+  font-size: 15px;
+}

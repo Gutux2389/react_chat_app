@@ -7,12 +7,14 @@ import { v4 } from "uuid";
 import Cookies from "universal-cookie";
 import { uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { memo } from "react";
+import EmojiPicker from "emoji-picker-react";
+import { useRef } from "react";
 const cookies = new Cookies();
 
 const ChatRoom = (props) => {
   const location = useLocation();
   const { roomName } = location.state;
-  const [newMessage, setNewMessage] = useState(null);
+  const [newMessage, setNewMessage] = useState('');
   const [currChats, setCurrChats] = useState();
   const [currUser, setCurrUser] = useState();
   const [msgImage, setMsgImage] = useState(null);
@@ -27,8 +29,10 @@ const ChatRoom = (props) => {
   const [isMembers, setIsMembers] = useState(null);
   const [pendingRequests, setPendingRequests] = useState(null);
   const [refresher,setRefresher] = useState(null);
+  const [emojiPickerShower,setEmojiPickerShower] = useState(false);
   const uuid = v4();
-  const { isMyAuth } = props;
+  const { isMyAuth,changeLatestMsg } = props;
+  const dummy = useRef();
   const chatRef = ref(db, `chats/${roomName.roomName}/chat/${uuid}`);
   const getImgRef = sref(
     storage,
@@ -74,10 +78,20 @@ const ChatRoom = (props) => {
           email: realUser,
           profile: realUserProfile,
         });
+        
       }
+      setNewMessage('');
+      dummy.current.scrollIntoView({ behavior : 'smooth'});
+      changeLatestMsg(v4());
     }
     console.log("Test3");
   }, [realtimeImg]);
+  const onEmojiClick = (emojiObject) =>{
+    const newString = newMessage + emojiObject.emoji;
+    console.log(newString);
+    setNewMessage(newString);
+    setEmojiPickerShower(!emojiPickerShower);
+  }
   const getRequests =  () =>{
     const requestsRef = ref(db,`chats/${roomName.roomName}/requests`);
     onValue(requestsRef,snapshot =>{
@@ -124,7 +138,7 @@ const ChatRoom = (props) => {
       setTakeOutUsers(addedUser);
     }
   };
-  const addNewMessage = async (e) => {
+  const addNewMessage =   async (e) => {
     e.preventDefault();
 
     await uploadBytes(getImgRef, msgImage);
@@ -483,7 +497,7 @@ const ChatRoom = (props) => {
               <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#pendingRequests">
                 Join Requests
               </li>
-              <li class="dropdown-item" onClick={()=>console.log(pendingRequests)}>
+              <li class="dropdown-item" onClick={()=>console.log(newMessage)}>
                   Test
               </li>
             </ul>
@@ -533,6 +547,7 @@ const ChatRoom = (props) => {
         </div>
       </div>
       <div className="chatspace">
+        <div className="msgArea">
         {currChats ? (
           <div>
             {currChats.map((msg) => {
@@ -566,24 +581,34 @@ const ChatRoom = (props) => {
                 </div>
               );
             })}
+            
           </div>
         ) : (
           <div></div>
         )}
+        {emojiPickerShower
+        ?<div className="emojiPicker">
+          <EmojiPicker onEmojiClick={onEmojiClick}/>
+        </div>
+        : null
+        }
+        <div ref={dummy}></div>
       </div>
+      
       <div className="inputBox">
-        <form onSubmit={addNewMessage} className="inputForm">
+        <form onSubmit={addNewMessage} className="inputOverallForm">
+          <span className="inputForm">
           <input
             className="textInput"
             type="text"
             maxLength={230}
-            placeholder=""
+            value={newMessage}
             onChange={(e) => {
               setNewMessage(e.target.value);
+              console.log(newMessage);
             }}
           />
-          <div className="iconInput">
-            <input
+          <input
               id="actual-file"
               type="file"
               onChange={(e) => {
@@ -591,19 +616,16 @@ const ChatRoom = (props) => {
               }}
               hidden
             />
-            <label for="actual-file">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-file-earmark-image"
-                viewBox="0 0 16 16"
-              >
-                <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1z" />
-              </svg>
-            </label>
+          <label for="actual-file" class="insideInputIcon">
+          <i class="fa-solid fa-circle-plus"></i>
+          </label>
+          <span className="emojiControl" onClick={()=>setEmojiPickerShower(!emojiPickerShower)}>
+          <i class="fa-solid fa-face-smile"></i>
+          </span>
+            </span>
+          <span className="iconInput">
+            
+            
             <button type="submit">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -616,8 +638,9 @@ const ChatRoom = (props) => {
                 <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
               </svg>
             </button>
-          </div>
+          </span>
         </form>
+      </div>
       </div>
     </div>
   );

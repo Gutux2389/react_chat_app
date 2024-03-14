@@ -1,6 +1,7 @@
-import { db } from "../libs/realtime_database";
+import { db, storage } from "../libs/realtime_database";
 import { useState,useEffect } from "react";
 import { ref,set,get, onValue } from "firebase/database";
+import { getDownloadURL, ref as sref, uploadBytes } from "firebase/storage";
 import { auth } from "../libs/realtime_database";
 import { getAuth } from "firebase/auth";
 import {v4} from 'uuid';
@@ -9,6 +10,10 @@ export const NewChatRoom = () =>{
     const [avaUsers,setAvaUsers] = useState(null);
     const [selectedUsers,setSelectedUsers] = useState([]);
     const [refresher,setRefresher] = useState(null);
+    const [startCreate,setStartCreate] = useState(null);
+    const [chatPhoto,setChatPhoto] = useState(null);
+    const uuid =  v4();
+
     const addedUser = [];
     useEffect(()=>{
       const userREf = ref(db,'/users');
@@ -22,6 +27,30 @@ export const NewChatRoom = () =>{
       })
       
     },[refresher])
+    useEffect(()=>{
+      if(startCreate){
+      if(chatPhoto){
+      const chatsRef = ref(db,`/chats/${roomName}`);
+      
+        set(chatsRef,{
+          roomName: roomName,
+          members: selectedUsers,
+          chatPhoto
+      });
+        window.location.reload();
+      }else{
+        const chatsRef = ref(db,`/chats/${roomName}`);
+      
+        set(chatsRef,{
+          roomName: roomName,
+          members: selectedUsers,
+          chatPhoto: "https://cdn.worldvectorlogo.com/logos/react-1.svg"
+      });
+        window.location.reload();
+      }
+      }
+      
+    },[startCreate])
     const takeOutUser = (e) =>{
       e.preventDefault();
       const Btn = document.getElementById(e.target.value);
@@ -47,15 +76,18 @@ export const NewChatRoom = () =>{
       }
       
     
-    const createRoom = (e) =>{
-        
-        const chatsRef = ref(db,`/chats/${roomName}`);
+    const createRoom = async (e) =>{
+      e.preventDefault();
+      if(chatPhoto){
+      const getImgRef = sref(storage,`/chats/${roomName}/profile/${uuid}/${chatPhoto}`);
 
-        set(chatsRef,{
-            roomName: roomName,
-            members: selectedUsers
-        });
-        setRefresher(v4());
+      await uploadBytes(getImgRef, chatPhoto);
+      const chatProfile = await getDownloadURL(getImgRef);
+      setChatPhoto(chatProfile);
+      setStartCreate(v4());
+      }else{
+        setStartCreate(v4());
+      }
       }
 
     return(
@@ -91,6 +123,7 @@ export const NewChatRoom = () =>{
               </div>
               : null
               }
+              <input type="file" onChange={(e)=>{setChatPhoto(e.target.files[0]);console.log(e.target.files[0])}} />
               <button class='btn btn-primary'>Create Your Room</button>
     </form>
     <button onClick={()=>console.log(selectedUsers)}>Test</button>
