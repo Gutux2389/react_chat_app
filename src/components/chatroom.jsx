@@ -1,4 +1,4 @@
-import { ref, get, set, onValue, update } from "firebase/database";
+import { ref, get, set, onValue, update,remove } from "firebase/database";
 import { ref as sref } from "firebase/storage";
 import { db, auth, storage } from "../libs/realtime_database";
 import { useLocation } from "react-router-dom";
@@ -86,6 +86,25 @@ const ChatRoom = (props) => {
     }
     console.log("Test3");
   }, [realtimeImg]);
+  const acceptMember = (userInfo) =>{
+    const chatroomRef = ref(db, `chats/${roomName.roomName}`);
+    const reqRef = ref(db,`chats/${roomName.roomName}/requests/${userInfo.uuid}`);
+    let memberUUID = isMembers.map((member) => {
+      return member.uuid;
+    });
+    const finalUsers = [...memberUUID, userInfo.uuid];
+    update(chatroomRef, {
+      members: finalUsers,
+    });
+    remove(reqRef);
+    setRefresher(v4());
+
+  }
+  const declineMember = (userInfo) =>{
+    const reqRef = ref(db,`chats/${roomName.roomName}/requests/${userInfo.uuid}`);
+    remove(reqRef);
+    setRefresher(v4());
+  }
   const onEmojiClick = (emojiObject) =>{
     const newString = newMessage + emojiObject.emoji;
     console.log(newString);
@@ -524,8 +543,8 @@ const ChatRoom = (props) => {
                               style={{width: 30,  height: 35}}
                             />
                             <span style={{paddingTop: 5}}>{request.userInfo.username}</span>
-                            <button class="btn btn-success">Accept</button>
-                            <button class="btn btn-danger">Decline</button>
+                            <button class="btn btn-success" onClick={()=>acceptMember(request.userInfo)}>Accept</button>
+                            <button class="btn btn-danger" onClick={()=>declineMember(request.userInfo)}>Decline</button>
                           </div>
                         )
                       })
@@ -581,21 +600,21 @@ const ChatRoom = (props) => {
                 </div>
               );
             })}
-            
           </div>
         ) : (
           <div></div>
         )}
-        {emojiPickerShower
+        
+        <div ref={dummy}></div>
+      </div>
+      
+      <div className="inputBox">
+      {emojiPickerShower
         ?<div className="emojiPicker">
           <EmojiPicker onEmojiClick={onEmojiClick}/>
         </div>
         : null
         }
-        <div ref={dummy}></div>
-      </div>
-      
-      <div className="inputBox">
         <form onSubmit={addNewMessage} className="inputOverallForm">
           <span className="inputForm">
           <input

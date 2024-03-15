@@ -23,9 +23,9 @@ export const CreateAcc = () =>{
     return(
         <div>
         <form onSubmit={newUser}>
-            <input type="text" class="form-control mb-2" onChange={(e)=>{setAccName(e.target.value)}} placeholder="Enter your name here"/>
+            <input type="text" class="form-control mb-2" onChange={(e)=>{setAccName(e.target.value)}} placeholder="Username"/>
             
-            <input type="password" class="form-control" onChange={(e)=>{setAccPassword(e.target.value)}} placeholder="Enter your password"/>
+            <input type="password" class="form-control" onChange={(e)=>{setAccPassword(e.target.value)}} placeholder="Password"/>
             <button type="submit" class="btn btn-primary">Create Account</button>
         </form>
         </div>

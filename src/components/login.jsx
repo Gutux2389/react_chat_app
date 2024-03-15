@@ -33,8 +33,8 @@ export const LoginWithFirebase = (props) =>{
     return(
         <div>
             <form onSubmit={firebaseLogin}>
-            <input type="text" class="form-control mb-2" onChange={(e)=>setFirebaseName(e.target.value)} placeholder="Enter your name here"/>
-            <input type="password" class="form-control" onChange={(e)=>setFirebasePass(e.target.value)} placeholder="Enter your password"/>
+            <input type="text" class="form-control mb-2" onChange={(e)=>setFirebaseName(e.target.value)} placeholder="Username"/>
+            <input type="password" class="form-control" onChange={(e)=>setFirebasePass(e.target.value)} placeholder="Password"/>
             <button class="btn btn-primary">Create Account</button>
         </form>
         </div>

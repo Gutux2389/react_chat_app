@@ -36,6 +36,10 @@
     transform: rotate(360deg);
   }
 }
+:root{
+  --windowHeight : window.innerHeight();
+  --windowWidth : window.innerWidth();
+}
 p{
   max-width: 500px;
   margin-bottom: 12px;
@@ -43,7 +47,7 @@ p{
   padding: 10px 20px;
   border-radius: 25px;
   position: relative;
-  color: black;
+  color: white;
   text-align: center;
 }
 .message{
@@ -61,21 +65,25 @@ p{
   align-self: flex-end;
 }
 .received p{
-  background: #e5e5ea;
-  color: black;
+  background: #15879e;
+  color: white;
   align-self: flex-start;
 }
 .msgArea{
   position: relative;
+  background-color: #282c34;
 }
 .emojiPicker{
   position: absolute;
   
   right: 50px;
-  bottom: 0px;
+  bottom: 33px;
+}
+.chatspace{
+  
 }
 .chatbox {
-  height: 84vh;
+  height: 89vh;
   align-content: center;
   overflow-y: scroll;
   display: flex;
@@ -84,6 +92,8 @@ p{
 }
 .GuestMainPage{
   height: 100vh;
+  position: relative;
+  background: #181c1c
 }
 .sentProfile{
   border-radius: 50%;
@@ -104,51 +114,82 @@ p{
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
+  color: white;
+}
+.welcomePage{
+  background-color: #282c34;
+  height: 92.8vh;
 }
 .myLogin{
   position: absolute;
   left: 40%;
   top: 15%;
   height: 68vh;
-  width: 300px;
+  width: 152px;
   overflow: hidden  ;
+}
+@media (max-width: 1200px){
+  .myLogin{
+    position: absolute;
+    left: 30%;
+    top: 38%;
+    height: 25vh;
+    
+  }
 }
 .myLoginAuth{
   width: 100%;
   border-radius: 20px;
-  background-color: #3f51b5;
+  background-color: #15879e;
   color: white;
 }
 .mySlideText{
   position: absolute;
   bottom: 0;
 }
-.myLoginAni-enter{
-  position: absolute;
-  transform: translateY(80%);
+@media (max-width:1200px){
+  .mySlideText{
+    display: none;
+  }
 }
-.myLoginAni-enter-active{
-  transform: translateY(0%);
-  transition: all 300ms ease;
+@media(min-width: 1200px){
+
+  .myLoginAni-enter{
+    position: absolute;
+    transform: translateY(80%);
+  }
+  .myLoginAni-enter-active{
+    transform: translateY(0%);
+    transition: all 300ms ease;
+  }
+  .myLoginAni-exit{
+    position: absolute;
+  }
+  .myLoginAni-exit-active{
+    transform: translateY(80%);
+    transition: all 300ms ease;
+  }
+  
 }
-.myLoginAni-exit{
-  position: absolute;
-}
-.myLoginAni-exit-active{
-  transform: translateY(80%);
-  transition: all 300ms ease;
-}
+
 .emailLogin{
   position: absolute;
   left: 10%;
   top: 15%;
   height: 68vh;
 }
+@media (max-width: 1200px){
+  .emailLogin{
+    position: absolute;
+    left: 30%;
+    top: 15%;
+    height: 25vh;
+  }
+}
 .emailauth{
   border-radius: 20px;
-}
-.emailauth:hover{
-  background-color: #28CEE7;
+  background-color: #15879e;
+  color: white;
 }
 
 .dropImg{
@@ -172,10 +213,10 @@ p{
   flex-direction: row;
 }
 .inputBox{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: white;
+  background-color: #282c34;
 }
 .textInput{
   width: 95%;
@@ -258,12 +299,46 @@ p{
     left: 70%;
     top: 15%;
     height: 68vh;
-    width: 300px;
-    overflow: hidden  ;
+    width: 152px;
+    overflow: hidden;
+}
+@media (max-width: 1200px){
+  .myCreateAcc{
+    position: absolute;
+    left: 30%;
+    top: 65%;
+    height: 25vh;
+  }
+}
+@media (max-width: 500px){
+  .myCreateAcc{
+    position: absolute;
+    left: 30%;
+    top: 65%;
+    height: 25vh;
+  }
+}
+@media (max-width: 500px){
+  .emailLogin{
+    position: absolute;
+    left: 30%;
+    top: 15%;
+    height: 25vh;
+  }
+}
+@media (max-width: 500px){
+  .myLogin{
+    position: absolute;
+    left: 30%;
+    top: 38%;
+    height: 25vh;
+  }
 }
 .myCreateAuth{
   width: 100%;
   border-radius: 20px;
+  background-color: #15879e;
+  color: white;
 }
 .myCreateBtn-enter{
   position: absolute;
@@ -303,10 +378,12 @@ p{
 }
 .chatroomNav{
   padding: 5px;
-  border: 3px solid black;
+  border: 3px solid #181c1c;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: white;
+  background-color: #181c1c;
 }
 .chatroomNavBtns{
   display: flex;
@@ -326,6 +403,7 @@ p{
 .emojiControl{
   padding-left: 12px;
   padding-top: 3px;
+  padding-right: 3px;
   cursor: pointer;
 }
 .inputOverallForm{
@@ -336,6 +414,7 @@ p{
 }
 .searchBar{
   position: relative;
+  width: 100%;
 }
 .suggestion{
   position: absolute;
@@ -368,4 +447,29 @@ ul a{
 .latestMsg{
   opacity: 50%;
   font-size: 15px;
+}
+.TopNavBar{
+  
+
+}
+.TopRightBtn{
+  float: right;
+  display: inline;
+}
+.TopLeftBtn{
+  display: inline;
+}
+.TopSearchBar{
+  width: 100%;
+  display: inline-block;
+}
+@media(min-width: 1200px) {
+  .TopSearchBar{
+    width: 1100px;
+    padding-left: 100px;
+    display: inline-block;
+  }
+}
+.TopBar{
+  background-color: #282c34;
 }

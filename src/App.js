@@ -192,7 +192,7 @@ function App() {
               className="myCreateAuth"
               onClick={() => setCreateLoginOn(true)}
             >
-              Create an account on our website
+              Create an account
             </button>
           </CSSTransition>
         </div>
@@ -243,7 +243,7 @@ function App() {
             classNames={"myLoginBtn"}
           >
             <button className="myLoginAuth" onClick={() => setLoginOn(true)}>
-              Log in with Our Account
+              Log in
             </button>
           </CSSTransition>
 
@@ -311,8 +311,7 @@ function App() {
   const chatJoinRequest = (roomName, userInfo) => {
     const newRequest = ref(db, `/chats/${roomName}/requests/${userInfo.uuid}`);
     set(newRequest, {
-      userInfo: userInfo,
-      requestPending: true,
+      userInfo: userInfo
     });
     setRefresher(v4());
   };
@@ -406,6 +405,7 @@ function App() {
                               setRoomName("2");
                               setNewChatShow(null);
                             }}
+                            data-bs-dismiss="offcanvas"
                           >
                             <li className="roomGroup">
                               <img
@@ -435,6 +435,7 @@ function App() {
                               setRoomName("2");
                               setNewChatShow(null);
                             }}
+                            data-bs-dismiss="offcanvas"
                           >
                             <li className="roomGroup">
                               <img
@@ -486,6 +487,7 @@ function App() {
                               setRoomName("1");
                               setNewChatShow(null);
                             }}
+                            data-bs-dismiss="offcanvas"
                           >
                             <li className="roomGroup">
                               <img
@@ -523,6 +525,7 @@ function App() {
                               setRoomName("1");
                               setNewChatShow(null);
                             }}
+                            data-bs-dismiss="offcanvas"
                           >
                             <li className="roomGroup">
                               <img
@@ -549,30 +552,45 @@ function App() {
               </div>
             </div>
           </div>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <div class="nav-item">
+          <div className="TopBar">
+            <div className="TopNavBar">
+              <div className="TopLeftBtn">
                 <button
                   class="btn"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#offcanvas"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16 "
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-list"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
-                    />
-                  </svg>
+                  <i class="fa-solid fa-bars" style={({backgroundColor: "white"})}></i>
                 </button>
               </div>
-              <div class="nav-item">
+              <div class="dropstart" className="TopRightBtn">
+                {loggedUser || isMyAuth ? (
+                  <a
+                    class=" dropdown-toggle"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    <img
+                      className="dropImg"
+                      src={loggedUser ? loggedUser.photoURL : isMyAuth.photoURL}
+                    />
+                  </a>
+                ) : (
+                  <div></div>
+                )}
+                <ul class="dropdown-menu dropdown-menu-left">
+                  <li class="dropdown-item" onClick={signOutUser}>
+                    Log Out
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    onClick={() => console.log(directMessage)}
+                  >
+                    Test
+                  </li>
+                </ul>
+              </div>
+              <div className="TopSearchBar">
                 <div className="searchBar">
                   <input
                     class="form-control"
@@ -580,7 +598,7 @@ function App() {
                     placeholder="Search"
                     aria-label="Search"
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{ width: 350 }}
+                    style={{ width: "100%" }}
                   />
 
                   {chatSuggestion ? (
@@ -708,38 +726,11 @@ function App() {
                   ) : null}
                 </div>
               </div>
-              <div class="nav-item dropstart">
-                {loggedUser || isMyAuth ? (
-                  <a
-                    class="nav-link dropdown-toggle"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                  >
-                    <img
-                      className="dropImg"
-                      src={loggedUser ? loggedUser.photoURL : isMyAuth.photoURL}
-                    />
-                  </a>
-                ) : (
-                  <div></div>
-                )}
-                <ul class="dropdown-menu dropdown-menu-left">
-                  <li class="dropdown-item" onClick={signOutUser}>
-                    Log Out
-                  </li>
-                  <li
-                    class="dropdown-item"
-                    onClick={() => console.log(directMessage)}
-                  >
-                    Test
-                  </li>
-                </ul>
-              </div>
             </div>
-          </nav>
+          </div>
           <div>
             {(roomName === null) & (newChatShow === null) ? (
-              <div>
+              <div className="welcomePage">
                 <div className="welcomeMsg">
                   <h3>Start a new group or Find Groups to Join</h3>
                 </div>
