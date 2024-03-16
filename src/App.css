@@ -72,15 +72,13 @@ p{
 .msgArea{
   position: relative;
   background-color: #282c34;
+  color: white;
 }
 .emojiPicker{
   position: absolute;
   
   right: 50px;
   bottom: 33px;
-}
-.chatspace{
-  
 }
 .chatbox {
   height: 89vh;
@@ -93,7 +91,6 @@ p{
 .GuestMainPage{
   height: 100vh;
   position: relative;
-  background: #181c1c
 }
 .sentProfile{
   border-radius: 50%;
@@ -239,8 +236,14 @@ p{
   justify-content: center;
 }
 .newchatroom{
-  border: solid;
+  border: solid #282c34;
   padding: 10px;
+  background-color: #282c34;
+  color: white;
+}
+.entireNewChat{
+  height: 100vh;
+  background-color: #282c34;
 }
 .emailSlideText{
   position: absolute; 
@@ -382,8 +385,8 @@ p{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #282c34;
   color: white;
-  background-color: #181c1c;
 }
 .chatroomNavBtns{
   display: flex;
@@ -425,7 +428,7 @@ p{
   border: 2px solid grey;
 }
 .recentMsg{
-  color: black;
+  color: white;
   display: flex;
   flex-direction: column;
 }
@@ -472,4 +475,40 @@ ul a{
 }
 .TopBar{
   background-color: #282c34;
+}
+.modeToggle{
+  border: 2px solid #282c34;
+  border-radius: 20px;
+}
+.BtnDark{
+  background-color: #282c34;
+}
+.BtnLight{
+  background-color: white;
+}
+.ToggleBall{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-top: 2.5px;
+  margin-left: 2px;
+  display: inline-block;
+}
+.light{
+  background-color: white;
+  transition: all 0.5 ease;
+  left: 70%;
+  position: relative;
+}
+.dark{
+  background-color: #282c34;
+}
+.overAllLight{
+  background-color: white;
+  color: #282c34;
+}
+
+.overAllDarK{
+  background-color: #282c34;
+  color: white;
 }

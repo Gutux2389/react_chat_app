@@ -35,6 +35,7 @@ function App() {
   const [avaChats, setAvaChats] = useState(null);
   const [searchQuery, setSearchQuery] = useState(null);
   const [directMessage, setDirectMessage] = useState(null);
+  const [lightDarkToggle,setLightDarkToggle] = useState(false);
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -364,7 +365,7 @@ function App() {
             id="offcanvas"
             data-bs-keyboard="false"
           >
-            <div class="offcanvas-header">
+            <div class={`offcanvas-header ${lightDarkToggle ? "bg-dark text-white" : "bg-white text-dark" } `}>
               <h6 id="offcanvas" class="offcanvas-title">
                 Your Chatrooms
               </h6>
@@ -384,7 +385,7 @@ function App() {
                 data-bs-dismiss="offcanvas"
               ></button>
             </div>
-            <div class="offcanvas-body">
+            <div class={`offcanvas-body ${lightDarkToggle ? "bg-dark text-white" : "bg-white text-dark" }`}>
               <div>
                 {rooms ? (
                   <ul>
@@ -417,7 +418,7 @@ function App() {
                                   borderRadius: 50,
                                 }}
                               />
-                              <span className="recentMsg">
+                              <span className={`recentMsg ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
                                 <span>{room.roomName}</span>
                                 <span className="latestMsg">
                                   {lastMsg.email}: {lastMsg.message}
@@ -447,7 +448,7 @@ function App() {
                                   borderRadius: 50,
                                 }}
                               />
-                              <span className="recentMsg">
+                              <span className={`recentMsg ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
                                 <span>{room.roomName}</span>
                               </span>
                             </li>
@@ -499,7 +500,7 @@ function App() {
                                   borderRadius: 50,
                                 }}
                               />
-                              <span className="recentMsg">
+                              <span className={`recentMsg ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
                                 <span>{receiver.username}</span>
                                 <span className="latestMsg">
                                   {lastMsg.email}: {lastMsg.message}
@@ -537,7 +538,7 @@ function App() {
                                   borderRadius: 50,
                                 }}
                               />
-                              <span className="recentMsg">
+                              <span className={`recentMsg ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
                                 <span>{receiver.username}</span>
                               </span>
                             </li>
@@ -552,8 +553,8 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="TopBar">
-            <div className="TopNavBar">
+          <div className={`TopBar ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
+            <div className={`TopNavBar ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
               <div className="TopLeftBtn">
                 <button
                   class="btn"
@@ -569,6 +570,7 @@ function App() {
                     class=" dropdown-toggle"
                     role="button"
                     data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
                   >
                     <img
                       className="dropImg"
@@ -584,9 +586,10 @@ function App() {
                   </li>
                   <li
                     class="dropdown-item"
-                    onClick={() => console.log(directMessage)}
                   >
-                    Test
+                    <div className={`modeToggle ${lightDarkToggle ? "BtnDark" : "BtnLight"}`}>
+                      <button className={`ToggleBall ${lightDarkToggle ? "light" : "dark"}`} onClick={()=>setLightDarkToggle(!lightDarkToggle)}></button>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -730,8 +733,8 @@ function App() {
           </div>
           <div>
             {(roomName === null) & (newChatShow === null) ? (
-              <div className="welcomePage">
-                <div className="welcomeMsg">
+              <div className={`welcomePage ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
+                <div className={`welcomeMsg ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
                   <h3>Start a new group or Find Groups to Join</h3>
                 </div>
               </div>
@@ -747,6 +750,7 @@ function App() {
                             <ChatRoom
                               isMyAuth={isMyAuth}
                               changeLatestMsg={setRefresher}
+                              lightDarkToggle={lightDarkToggle}
                             />
                           }
                         />
@@ -757,6 +761,7 @@ function App() {
                             <DirectMessage
                               isMyAuth={isMyAuth}
                               changeLatestMsg={setRefresher}
+                              lightDarkToggle={lightDarkToggle}
                             />
                           }
                         />
@@ -764,7 +769,7 @@ function App() {
                     </Routes>
                   ) : (
                     <Routes>
-                      <Route path="/Newchatroom" element={<NewChatRoom />} />
+                      <Route path="/Newchatroom" element={<NewChatRoom lightDarkToggle={lightDarkToggle}/>} />
                     </Routes>
                   )}
                 </div>

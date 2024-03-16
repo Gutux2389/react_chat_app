@@ -5,7 +5,8 @@ import { getDownloadURL, ref as sref, uploadBytes } from "firebase/storage";
 import { auth } from "../libs/realtime_database";
 import { getAuth } from "firebase/auth";
 import {v4} from 'uuid';
-export const NewChatRoom = () =>{
+
+export const NewChatRoom = (props) =>{
     const [roomName,setRoomName] = useState();
     const [avaUsers,setAvaUsers] = useState(null);
     const [selectedUsers,setSelectedUsers] = useState([]);
@@ -13,7 +14,7 @@ export const NewChatRoom = () =>{
     const [startCreate,setStartCreate] = useState(null);
     const [chatPhoto,setChatPhoto] = useState(null);
     const uuid =  v4();
-
+    const {lightDarkToggle} = props;
     const addedUser = [];
     useEffect(()=>{
       const userREf = ref(db,'/users');
@@ -91,7 +92,8 @@ export const NewChatRoom = () =>{
       }
 
     return(
-    <div class="newchatroom">
+    <div className={`entireNewChat ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
+    <div className={`newchatroom ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
     <h2>Create A New ChatRoom</h2>
     <form onSubmit={createRoom}>
               <input class="form-control" onChange={(e)=>{setRoomName(e.target.value)}} placeholder="Create Your ChatRoom..."/>
@@ -126,7 +128,8 @@ export const NewChatRoom = () =>{
               <input type="file" onChange={(e)=>{setChatPhoto(e.target.files[0]);console.log(e.target.files[0])}} />
               <button class='btn btn-primary'>Create Your Room</button>
     </form>
-    <button onClick={()=>console.log(selectedUsers)}>Test</button>
+    
+    </div>
     </div>
     )
 }

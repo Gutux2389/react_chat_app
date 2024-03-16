@@ -31,7 +31,7 @@ const ChatRoom = (props) => {
   const [refresher,setRefresher] = useState(null);
   const [emojiPickerShower,setEmojiPickerShower] = useState(false);
   const uuid = v4();
-  const { isMyAuth,changeLatestMsg } = props;
+  const { isMyAuth,changeLatestMsg,lightDarkToggle } = props;
   const dummy = useRef();
   const chatRef = ref(db, `chats/${roomName.roomName}/chat/${uuid}`);
   const getImgRef = sref(
@@ -265,8 +265,8 @@ const ChatRoom = (props) => {
 
   return (
     <div className="chatbox">
-      <div className="chatroomNav">
-        <div className="chatroomNavName">{roomName.roomName}</div>
+      <div className={`chatroomNav ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
+        <div>{roomName.roomName}</div>
         <div className="chatroomNavBtns">
           <div
             class="modal fade"
@@ -277,7 +277,7 @@ const ChatRoom = (props) => {
           >
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
+                <div class={`modal-header ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <h5 class="modal-title" id="exampleModalLabel">
                     Add new members to the group
                   </h5>
@@ -288,7 +288,7 @@ const ChatRoom = (props) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div class={`modal-body ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   {notMembers
                     ? notMembers.map((member) => {
                         return (
@@ -328,7 +328,7 @@ const ChatRoom = (props) => {
                     </ul>
                   ) : null}
                 </div>
-                <div class="modal-footer">
+                <div class={`modal-footer ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <button
                     type="button"
                     class="btn btn-secondary"
@@ -367,7 +367,7 @@ const ChatRoom = (props) => {
           <div class="modal" tabindex="-1" id="banMemberModal">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
+                <div class={`modal-header ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <h5 class="modal-title">Ban or remove members</h5>
                   <button
                     type="button"
@@ -376,7 +376,7 @@ const ChatRoom = (props) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div class={`modal-body ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   {isMembers
                     ? isMembers.map((member) => {
                         return (
@@ -416,7 +416,7 @@ const ChatRoom = (props) => {
                     </ul>
                   ) : null}
                 </div>
-                <div class="modal-footer">
+                <div class={`modal-footer ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <button
                     type="button"
                     class="btn btn-secondary"
@@ -451,8 +451,8 @@ const ChatRoom = (props) => {
           <div class="modal" tabindex="-1" id="leaveSelfModal">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Are you sure you want to leave?</h5>
+                <div class={`modal-header ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
+                  <h5 class="modal-title">Leave the room</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -460,8 +460,10 @@ const ChatRoom = (props) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">Hi</div>
-                <div class="modal-footer">
+                <div class={`modal-body ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
+                Are you sure you want to leave?
+                </div>
+                <div class={`modal-footer ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <button
                     type="button"
                     class="btn btn-secondary"
@@ -516,15 +518,12 @@ const ChatRoom = (props) => {
               <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#pendingRequests">
                 Join Requests
               </li>
-              <li class="dropdown-item" onClick={()=>console.log(newMessage)}>
-                  Test
-              </li>
             </ul>
           </div>
           <div class="modal" tabindex="-1" id="pendingRequests">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
+                <div class={`modal-header ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <h5 class="modal-title">Pending Requests</h5>
                   <button
                     type="button"
@@ -533,7 +532,7 @@ const ChatRoom = (props) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div class={`modal-body ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                       {pendingRequests
                       ? pendingRequests.map((request) =>{
                         return(
@@ -551,7 +550,7 @@ const ChatRoom = (props) => {
                       : null
                       }
                 </div>
-                <div class="modal-footer">
+                <div class={`modal-footer ${lightDarkToggle ? "bg-dark text-white" : "text-dark bg-white"}`}>
                   <button
                     type="button"
                     class="btn btn-secondary"
@@ -566,7 +565,7 @@ const ChatRoom = (props) => {
         </div>
       </div>
       <div className="chatspace">
-        <div className="msgArea">
+        <div className={`msgArea ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
         {currChats ? (
           <div>
             {currChats.map((msg) => {
@@ -608,7 +607,7 @@ const ChatRoom = (props) => {
         <div ref={dummy}></div>
       </div>
       
-      <div className="inputBox">
+      <div className={`inputBox ${lightDarkToggle ? "overAllDark" : "overAllLight"}`}>
       {emojiPickerShower
         ?<div className="emojiPicker">
           <EmojiPicker onEmojiClick={onEmojiClick}/>
